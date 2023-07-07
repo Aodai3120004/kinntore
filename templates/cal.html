@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form  action="/" method="get">
+<p> <input type="submit" value="テスト"> </p>
+{% for j in x2 %}
+    <hr size = 5; color = "black">
+        <table border = "5">
+            {% for k in j %}
+                <tr>
+                    {% set d = k.split() %}
+                        {% for z in d %}
+                            <td>
+                                <p>{{z}}</p>
+                                <textarea cols="10" rows="3"></textarea>
+                            </td>
+                        {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+{% endfor %}
+</form>
+{% endblock %}
