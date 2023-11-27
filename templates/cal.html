@@ -1,23 +1,231 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
 {% block content %}
+<!--
+<p>data{{data}}</p>
+<p>y{{y}}</p>
+<p>x0{{x0}}</p>
+<p>x1{{x1}}</p>
+<p>x2{{x2}}</p>
+<p>x3{{x3}}</p>
+<p>x5{{x5}}</p>
+<p>recoday:{{recoday}}</p>
+<p>setday:{{setday}}</p>
+<p>setday_list:{{setday_list}}</p>
+<p>setday_str:{{setday_str}}</p>
+-->
+<!--<p>x5{{x5}}</p>
+<p>setday_str:{{setday_str}}</p>
+<p>x2{{x2}}</p>
+<p>data{{data}}</p>
+<p>zo{{z0}}</p>
+-->
 
-<form  action="/" method="get">
-<p> <input type="submit" value="テスト"> </p>
-{% for j in x2 %}
-    <hr size = 5; color = "black">
-        <table border = "5">
-            {% for k in j %}
-                <tr>
-                    {% set d = k.split() %}
-                        {% for z in d %}
+<!--
+<div class="tooltip-001">
+    マウスホバーしてください,　<span>ツールチップの内容</span>
+</div>
+
+<div class="tooltip-001">
+    マウスホバーしてください<span>ツールチップの内容</span>
+</div>
+-->
+
+
+<div class="container-fulid">
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+		    <div class="table-responsive">
+		    <table class="table">
+            <tr>
+            {% for i in item %}
+                    {% for j in kinds %}
+                        <form  action="/result0" method="post">
                             <td>
-                                <p>{{z}}</p>
-                                <textarea cols="10" rows="3"></textarea>
+                                {% if i == j %}
+                                    <p><input class="box0" type="submit" name="a" value={{i}} style="color:white;background-color:black"></p>
+                                {% else %}
+                                    <p><input class="box0" type="submit" name="a" value={{i}}></p>
+                                {% endif %}
                             </td>
-                        {% endfor %}
-                </tr>
+                        </form>
+                    {% endfor %}
             {% endfor %}
-        </table>
-{% endfor %}
+            <tr>
+            </table>
+            </div>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
+	<div class="row">
+	    <div class="col-sm-3"></div>
+		<div class="col-sm-6"><hr></div>
+		<div class="col-sm-3"></div>
+	</div>
+</div>
+
+
+
+<form  action="/result" method="post">
+    <div class="row">
+	    <div class="col-sm-3"></div>
+	        <div class="col-sm-6">
+                {% for i in x4 %}
+                    <input type="hidden" name="a" value={{d0}} >
+                    <input class="box1" type="submit" name="b" value={{i}}>
+                {% endfor %}
+            <hr>
+            </div>
+        <div class="col-sm-3"></div>
+    </div>    
 </form>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+		    {% for j in x3 %}
+                <div id="calendar">
+                    <div class="table-responsive">
+                    <table class="table">
+                    {% for k in j %}
+                        <tr>
+                            {% set d = k.split() %}
+                                {% for z in d %}
+                                    
+                                        <td>
+                                            <form  action="/result" method="post">
+                                            
+                                            {% if z == d0 %}
+                                                {% for u in x5 %}
+                                                    {% if z == u %}
+                                                        <p><input class="box" type="submit" name="a" value={{z}} style="background-color:#ffd700;"></p>
+                                                        <p><input type="hidden" name="b" value={{d01}}></p>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                            
+                                            {% if z == d0 %}
+                                                {% for v0 in setday_str %}
+                                                    {% if z == v0 %}
+                                                        
+                                                        <p><input class="box" type="submit" name="a" value={{z}} style="border:red solid 3px; background-color:#ffd700;"></p>
+                                                        <p><input type="hidden" name="b" value={{d01}}></p>
+                                                        
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for v in x5 %}
+                                                    {% if z == v %}
+                                                        <p><input class="box" type="submit" name="a" value={{z}}></p>
+                                                        <p><input type="hidden" name="b" value={{d01}}></p>
+                                                       
+                                                    {% endif %}
+                                                {% endfor %}
+                                                
+                                                {% for v0 in setday_str %}
+                                                    {% if z == v0 %}
+                                                        <p><input class="box" type="submit" name="a" value={{z}} style="border:red solid 3px;"></p>
+                                                        <p><input type="hidden" name="b" value={{d01}}></p>
+                                                                
+                                                    {% endif %}
+                                                {% endfor %}
+                                                
+                                            {% endif %}
+                                            </form>
+                                            {% for y in a %}
+                                                {% if z == y %}
+                                                    <p><input class="box" type="submit" name="a" value={{z}}></p>
+                                                {% endif %}
+                                            {% endfor %}
+                                            
+                                        </td>
+                                    
+                                {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </table>
+                    </div>
+                </div>
+            {% endfor %}
+            <hr>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+</div>
+
+
+{% for i in x2 %}
+    {% for j in data %}
+        {% if i == j %}
+        <div class="conteiner">
+            <div class="row">
+                <div class="col-sm-3"></div>
+		            <div class="col-sm-6">
+                        {% if tore == kinds %}
+                            <div class="tooltip-001">
+                                {{j.starttime}} ~<span>開始時間</span>
+                            </div>
+                            <div class="tooltip-001">
+                                {{j.site}}, <span>終了時間</span>
+                            </div>
+                            <div class="tooltip-001">
+                                {{j.content}}, <span>部位</span>
+                            </div>
+                            <div class="tooltip-001">
+                                {{j.nunber}}, <span>内容</span>
+                            </div>
+                            <div class="tooltip-001">
+                                {{j.time}}回, <span>回数</span>
+                            </div>
+                            <div class="tooltip-001">
+                                {{j.weight}}<span>自由記入</span>
+                            </div>
+                            <p></p>
+                            </p><a href="/del_todo/{{ j.id }}">削除</a>
+                        {% else %}
+                            <div class="tooltip-001">
+                                {{j.starttime}}, <span>開始時間</span>
+                            </div>
+                            <div class="tooltip-001">
+                                {{j.site}}, <span>食事内容</span>
+                            </div>
+                            <div class="tooltip-001">
+                                {{j.content}}g, <span>タンパク質量</span>
+                            </div>
+                            <div class="tooltip-001">
+                                {{j.nunber}}<span>自由記入</span>
+                            </div>
+                            <p></p>
+                            <a href="/del_todo/{{ j.id }}">削除</a>
+                        {% endif %}
+                        <hr>
+                    </div>
+                <div class="col-sm-3"></div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% for j in z0 %}
+        {% if i == j %}
+        <div class="conteiner">
+            <div class="row">
+		        <div class="col-sm-3"></div>
+		            <div class="col-sm-6">
+                        <form  action="/result1" method="post">
+                            <p><input type="hidden" name="c" value={{i}} ></p>
+                            <p><input type="hidden" name="kinds" value={{kinds}} ></p>
+                            <p><input type="hidden" name="item" value={{item}} ></p>
+                            <p><input class="box" type="submit" name="d" value="追加" ></p>
+                        </form>
+                    </div>
+                <div class="col-sm-3"></div>
+            </div>    
+        </div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+
+
 {% endblock %}

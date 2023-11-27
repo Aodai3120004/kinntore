@@ -1,0 +1,114 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<p>{{x5}}</p>
+
+<div class="container-fulid">
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+		    <div class="table-responsive">
+		    <table class="table">
+            <tr>
+            {% for i in item %}
+                    {% for j in kinds %}
+                        <form  action="/result0" method="post">
+                            <td>
+                                {% if i == j %}
+                                    <p><input class="box0" type="submit" name="a" value={{i}} style="color:white;background-color:black"></p>
+                                {% else %}
+                                    <p><input class="box0" type="submit" name="a" value={{i}}></p>
+                                {% endif %}
+                            </td>
+                        </form>
+                    {% endfor %}
+            {% endfor %}
+            <tr>
+            </table>
+            </div>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
+</div>
+<hr>
+
+<div class="table-responsive">
+<table class="table">
+<tr>
+<form  action="/result" method="post">
+    {% for i in x4 %}
+        <td width="-20">
+            <p> <input type="hidden" name="a" value={{d0}} >
+            <p><input class="box" type="submit" name="b" value={{i}}>
+        </td>
+    {% endfor %}
+</form>
+</tr>
+</table>
+</div>
+<hr>
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+		    {% for j in x3 %}
+                <div id="calendar">
+                    <div class="table-responsive">
+                    <table class="table">
+                    {% for k in j %}
+                        <tr>
+                            {% set d = k.split() %}
+                                {% for z in d %}
+                                    <form  action="/result" method="post">
+                                        <td>
+                                            {% if z == d0 %}
+                                                <p><input class="box" type="submit" name="a" value={{z}} style="background-color:#ffebcd"></p>
+                                                <p> <input type="hidden" name="b" value={{d01}} >
+                                            {% else %}
+                                                <p><input class="box" type="submit" name="a" value={{z}}></p>
+                                                <p> <input type="hidden" name="b" value={{d01}} >
+                                            {% endif %}
+                                        </td>
+                                    </form>
+                                {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </table>
+                    </div>
+                </div>
+            {% endfor %}
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+</div>
+<hr>
+
+
+{% for i in x2 %}
+    {% for j in data %}
+        {% if i == j %}
+        <div class="conteiner">
+            <p>{{j.starttime}} : {{j.site}} : {{j.content}} : {{j.nunber}} : {{j.time}} : {{j.weight}}</p>
+            <a href="/del_todo/{{ j.id }}">[delete]</a>
+        </div>
+            <hr>
+        {% endif %}
+    {% endfor %}
+    {% for j in z0 %}
+        {% if i == j %}
+            <form  action="/result1" method="post">
+                <p><input type="hidden" name="a" value={{d}} ></p>
+                <p><input type="hidden" name="b" value={{d1}} ></p>
+                <p><input type="hidden" name="c" value={{i}} ></p>
+                <p><input class="box" type="submit" name="d" value="追加" > </p>
+                <hr>
+            </form>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+
+
+{% endblock %}

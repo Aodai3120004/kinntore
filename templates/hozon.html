@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container-fulid">
+	<div class="row">
+	    <div class="col-sm-4"></div>
+	        <div class="col-sm-4">
+                <form  action="/result2" method="post">
+                {% if kinds == tore %}
+                    <label for="time">開始時間：</label>
+                    <input type="time" name="a" required>
+                    
+                    <label for="time">終了時間：</label>
+                    <input type="time" name="b" required>
+                
+                    <div class="cp_iptxt">
+	                    <input class="ef" type="text" name="c" placeholder="" required>
+	                    <label>部位：</label>
+	                    <span class="focus_line"></span>
+                    </div>
+                    <div class="cp_iptxt">
+	                    <input class="ef" type="text" name="d" placeholder="" required>
+	                    <label>内容：</label>
+	                    <span class="focus_line"></span>
+                    </div>
+                    <div class="cp_iptxt0">
+	                    <input class="ef" type="number" name="e" min="0" placeholder="" required>
+	                    <label>回数(回)：</label>
+	                    <span class="focus_line"></span>
+                    </div>
+                    <!--<div class="cp_iptxt">
+	                    <input class="ef" type="text" name="e" placeholder="" required>
+	                    <label>時間：</label>
+	                    <span class="focus_line"></span>
+                    </div>
+                    -->
+                    <div class="cp_iptxt0">
+	                    <input class="ef" type="text" name="f" placeholder="">
+	                    <label>自由記入：</label>
+	                    <span class="focus_line"></span>
+                    </div>
+                    <p> <input type="hidden" name="g" value={{name}} ></p>
+                    <p> <input class="box" type="submit" value="保存" ></p>
+                {% else %}
+                    <label for="time">開始時間:</label>
+                    <input type="time" name="a" required>
+                
+                    <div class="cp_iptxt0">
+	                    <input class="ef" type="text" name="b" placeholder="" required>
+	                    <label>食事内容：</label>
+	                    <span class="focus_line"></span>
+                    </div>
+                    <div class="cp_iptxt0">
+	                    <input class="ef" type="number" name="c" min="0" placeholder="" required>
+	                    <label>タンパク質(g):</a></label>
+	                    <span class="focus_line"></span>
+                    </div>
+                    <div class="cp_iptxt0">
+	                    <input class="ef" type="text" name="d" placeholder="">
+	                    <label>自由記入：</label>
+	                    <span class="focus_line"></span>
+                    </div>
+                    <p> <input type=hidden name="e"> </p>
+                    <p> <input type=hidden name="f"> </p>
+                    <p> <input type=hidden name="g" value={{name}} ></p>
+                    <p> <input class="box" type="submit" value="保存" ></p>
+                {% endif %}
+                </form>
+            </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+{% endblock %}
