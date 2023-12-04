@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 import os
 import calendar
+import datetime
 
 
 app = Flask(__name__)
@@ -97,6 +98,16 @@ def hello_world():
     d =  open('tra.txt','r')
     kinds = d.readlines()
     d.close
+    
+    currenttime30 =  open('test.txt','r')
+    timed30 = currenttime30.readlines()
+    currenttime30.close()
+    ltime30 = timed30[0]
+    
+    currenttime3 =  open('test1.txt','r')
+    timed3 = currenttime3.readlines()
+    currenttime3.close()
+    ltime3 = timed3[0] 
     
     
     
@@ -244,9 +255,21 @@ def hello_world():
     
     tore=["トレーニング"]
     
+    eat="食事"
+    
+    kinds0 = kinds[0]
+    
+    if eat == kinds[0]:
+        ltime = ltime3
+    else:
+        ltime = ltime30
+    
+    
+    
+    
     x4 = ["１月","２月","３月","４月","５月","６月","７月","８月","９月","１０月","１１月","１２月"]
     
-    return render_template("cal.html",a=a, x3=x3, x4=x4, x5=x5,d0=d0, d01=d01, d15=d15, item=item, kinds=kinds,x0=x0, tore=tore, x1=x1, x2=x2, y=y, z0=z0, data=data, recoday=recoday, setday=setday, setday_list=setday_list,setday_str=setday_str)
+    return render_template("cal.html",a=a, x3=x3, x4=x4, x5=x5,d0=d0, d01=d01, d15=d15, item=item, kinds=kinds, kinds0=kinds0, x0=x0, tore=tore, eat=eat, x1=x1, x2=x2, y=y, z0=z0, data=data, recoday=recoday, setday=setday, setday_list=setday_list, setday_str=setday_str, ltime=ltime)
 
     
 @app.route("/result0", methods=["POST"])
@@ -322,6 +345,80 @@ def del_todo(id):
 	db.session.delete(del_data)
 	db.session.commit()
 	return redirect(url_for('hello_world'))
+	
+
+
+@app.route('/date', methods=['POST'])
+def date():
+	
+	name = request.form["a"]
+	stime = name.split(":")
+	
+	dt_now = datetime.datetime.now()#datetime.datetime.now(pytz.timezone('Asia/Tokyo'))#datetime.datetime.now()
+	
+	year = dt_now.year
+	month = dt_now.month
+	day = dt_now.day
+	
+	dt_now0 = datetime.datetime(year, month, day, int(stime[0]), int(stime[1]))
+	dt_now1 = dt_now0 + datetime.timedelta(minutes=+30)
+	
+	year = dt_now1.year
+	month = dt_now1.month
+	day = dt_now1.day
+	hour = dt_now1.hour
+	minute = dt_now1.minute
+	second = dt_now1.second
+	
+	#dt_now0 = datetime.datetime(year, month, day, hour, stime[0], stime[1])
+
+	time = str(year) + "/" + str(month) + "/" +str(day) + " " + str(hour) + ":" + str(minute) + ":" + str(second)
+	
+	name = request.form["a"]
+	
+	
+	f =  open('test.txt','w')
+	f.write(time)
+	f.close
+	return redirect(url_for('hello_world'))
+
+
+
+@app.route('/date0', methods=['POST'])
+def date0():
+	
+	name = request.form["a"]
+	stime = name.split(":")
+	
+	dt_now = datetime.datetime.now()#datetime.datetime.now(pytz.timezone('Asia/Tokyo'))#datetime.datetime.now()
+	
+	year = dt_now.year
+	month = dt_now.month
+	day = dt_now.day
+	
+	dt_now0 = datetime.datetime(year, month, day, int(stime[0]), int(stime[1]))
+	dt_now1 = dt_now0 + datetime.timedelta(hours=+3)
+	
+	year = dt_now1.year
+	month = dt_now1.month
+	day = dt_now1.day
+	hour = dt_now1.hour
+	minute = dt_now1.minute
+	second = dt_now1.second
+	
+	#dt_now0 = datetime.datetime(year, month, day, hour, stime[0], stime[1])
+
+	time = str(year) + "/" + str(month) + "/" +str(day) + " " + str(hour) + ":" + str(minute) + ":" + str(second)
+	
+	name = request.form["a"]
+	
+	
+	f =  open('test1.txt','w')
+	f.write(time)
+	f.close
+	return redirect(url_for('hello_world'))
+
+
         
 
 if __name__ == "__main__":

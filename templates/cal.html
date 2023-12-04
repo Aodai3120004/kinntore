@@ -33,8 +33,8 @@
 
 <div class="container-fulid">
 	<div class="row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-4">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
 		    <div class="table-responsive">
 		    <table class="table">
             <tr>
@@ -55,14 +55,62 @@
             </table>
             </div>
 		</div>
-		<div class="col-sm-4"></div>
-	</div>
-	<div class="row">
-	    <div class="col-sm-3"></div>
-		<div class="col-sm-6"><hr></div>
 		<div class="col-sm-3"></div>
 	</div>
 </div>
+
+
+
+{% if eat == kinds0 %}
+    <div class="container-fulid">
+	    <div class="row">
+		    <div class="col-sm-3"></div>
+		    <div class="col-sm-6">
+		    
+                <form  action="/date0" method="post">
+                    <label for="time">食事終了時間：</label>
+                    <input type="time" name="a" required>
+                    <p><button class="box1">スタート</button></p>
+                </form>
+                <div id="countdownArea" class="countdown">
+                <!--
+                <span id="countdown-day"></span>日
+                -->
+                    <span id="countdown-hour"></span>時間
+                    <span id="countdown-min"></span>分
+                    <span id="countdown-sec"></span>秒
+                </div>
+                <hr>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+{% else %}
+    <div class="container-fulid">
+	    <div class="row">
+		    <div class="col-sm-3"></div>
+		    <div class="col-sm-6">
+		    
+                <form  action="/date" method="post">
+                    <label for="time">トレーニング終了時間：</label>
+                    <input type="time" name="a" required>
+                    <p><button class="box1">スタート</button></p>
+                </form>
+                <div id="countdownArea" class="countdown">
+                <!--
+                <span id="countdown-day"></span>日
+                -->
+                    <span id="countdown-hour"></span>時間
+                    <span id="countdown-min"></span>分
+                    <span id="countdown-sec"></span>秒
+                </div>
+                <hr>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+{% endif %}
+
 
 
 
@@ -227,5 +275,56 @@
 {% endfor %}
 
 
+<script>
+let countdown = setInterval(function(){
+    
+    function getLastDayOfMonth(year, month) {
+    // Months are zero-based, so month + 1 to get the next month, and 0 as the day to get the last day of the current month
+        const lastDay = new Date(year, month + 1, 0).getDate();
+        return lastDay;
+    }
+    const now = new Date()  //今の日時
+    //const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const day = now.getDate();
+    const hour = now.getHours();
+    const min = now.getMinutes();
+    const second = now.getSeconds();
+    const lom = getLastDayOfMonth(year, month);
+    const limit0 = lom - day
+    
+    const time = "{{ltime}}"
+    
+    //const time = 100
+    //const time = now.getMinutes();
+    //const target = new Date(now.getFullYear(), now.getMonth() + 1, 0,'23','59','59') //ターゲット日時を取得
+    //const target = new Date(now.getFullYear(), now.getMonth() + 1, "27")//-(lom-day)+10
+    const target = new Date( time );
+    //const target = now.getMinutes();
+    //const remainTime = now  //差分を取る（ミリ秒で返ってくる
+    const remainTime = target - now
+    
+    
+    //指定の日時を過ぎていたら処理をしない
+    if(remainTime < 0) return false 
+
+    //差分の日・時・分・秒を取得
+    //const difDay  = Math.floor(remainTime / 1000 / 60 / 60 / 24)
+    const difHour = Math.floor(remainTime / 1000 / 60 / 60 ) % 24
+    const difMin  = Math.floor(remainTime / 1000 / 60) % 60
+    const difSec  = Math.floor(remainTime / 1000) % 60
+
+    //残りの日時を上書き
+    //document.getElementById("countdown-day").textContent  = difDay
+    document.getElementById("countdown-hour").textContent = difHour
+    document.getElementById("countdown-min").textContent  = difMin
+    document.getElementById("countdown-sec").textContent  = difSec
+
+    //指定の日時になればカウントを止める
+    if(remainTime < 0) clearInterval(countdown)
+
+}, 1000)
+</script>
 
 {% endblock %}
