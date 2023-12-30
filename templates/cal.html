@@ -28,19 +28,37 @@
 <div class="tooltip-001">
     マウスホバーしてください<span>ツールチップの内容</span>
 </div>
--->
 
+
+<p>y:{{y}}</p>
+<p>reco:{{reco}}</p>
+<p>recoday:{{recoday}}</p>
+<p>data:{{data}}</p>
+<p>x0:{{x0}}</p>
+<p>x1:{{x1}}</p>
+<p>x2:{{x2}}</p>
+
+<p>{{int_params}}</p>
+<p>d:{{d}}</p>
+<p>d0:{{d0}}</p>
+<p>x5:{{x5}}</p>
+
+<a href="/del_todo/{{int_params}}/{{ aaaaa }}">削除</a>
+-->
 
 <div class="container-fulid">
 	<div class="row">
 		<div class="col-sm-3"></div>
 		<div class="col-sm-6">
+		    <form  action="/">
+		        <p><input class="box3" type="submit" value="ログアウト" style=background-color:coral></p>
+		    </form>
 		    <div class="table-responsive">
 		    <table class="table">
             <tr>
             {% for i in item %}
                     {% for j in kinds %}
-                        <form  action="/result0" method="post">
+                        <form  action="/result0/{{int_params}}" method="post">
                             <td>
                                 {% if i == j %}
                                     <p><input class="box0" type="submit" name="a" value={{i}} style="color:white;background-color:black"></p>
@@ -60,22 +78,31 @@
 </div>
 
 
+<!--
+<p id="hoge" class="box3">表示</p>
+
+<script>
+
+document.getElementById('hoge').title = "hello\nworld";
+
+</script>
+-->
 
 {% if eat == kinds0 %}
     <div class="container-fulid">
 	    <div class="row">
 		    <div class="col-sm-3"></div>
 		    <div class="col-sm-6">
-		    
-                <form  action="/date0" method="post">
+		        <p><input type="button" class="box4" value="使い方の説明" onClick="eat()"></p>
+                <form  action="/date0/{{int_params}}" method="post">
                     <label for="time">食事終了時間：</label>
                     <input type="time" name="a" required>
                     <p><button class="box1">スタート</button></p>
                 </form>
+                
+                
+                
                 <div id="countdownArea" class="countdown">
-                <!--
-                <span id="countdown-day"></span>日
-                -->
                     <span id="countdown-hour"></span>時間
                     <span id="countdown-min"></span>分
                     <span id="countdown-sec"></span>秒
@@ -90,8 +117,13 @@
 	    <div class="row">
 		    <div class="col-sm-3"></div>
 		    <div class="col-sm-6">
-		    
-                <form  action="/date" method="post">
+		        <table>
+                    <tr>
+                        <td><input type="button" class="box4" value="使い方の説明" onClick="tra()"></td>
+                        <td><input type="button" class="box4" value="おすすめの食材" onClick="food()"></td>
+                    </tr>
+                </table>
+                <form  action="/date/{{int_params}}" method="post">
                     <label for="time">トレーニング終了時間：</label>
                     <input type="time" name="a" required>
                     <p><button class="box1">スタート</button></p>
@@ -114,7 +146,27 @@
 
 
 
-<form  action="/result" method="post">
+<script type="text/javascript">
+function eat(){
+    window.alert('これは炭水化物摂取直後からトレーニングまでの空き時間をカウントするタイマー\n\n・炭水化物\n運動のエネルギー源となる栄養素\n摂取してから体に吸収されるまでが約三時間\n\nトレーニングの前にはしっかり炭水化物を摂取しましょう。\nタイマーの終了直後ぐらいからトレーニングを始めるといいでしょう。');
+}
+
+
+
+function tra(){
+    window.alert('これはトレーニング直後からタンパク質を摂取するのが望ましいとされる時間をカウントするタイマー\n\n・タンパク質\n筋肉や臓器など、ヒトの体を構成するうえで必要な栄養素​\n吸収される量が多いほど、筋肉が合成されやすくなる​\n\nトレーニング直後約３０分以内は筋肉の修復作業が活発に行われている状態。​\n\n筋繊維を効率よく修復し、筋肥大につなげるために、タイマーの終了までにはしっかりタンパク質を摂取しましょう。\nまた炭水化物と合わせて摂取すると尚いいでしょう。');
+}
+
+
+
+function food(){
+    window.alert('肉類\n魚介類\n乳製品\n豆類\n卵\n\nこれらはたんぱく質を多く含む食材ですが、中でも動物性たんぱく質を含む食品は部位ごとにエネルギー量や栄養素量が異なるため注意が必要です。\n「何の肉の、どの部分を食べるか」まで意識するとより良いでしょう。');
+}
+</script>
+
+
+
+<form  action="/result/{{int_params}}" method="post">
     <div class="row">
 	    <div class="col-sm-3"></div>
 	        <div class="col-sm-6">
@@ -142,7 +194,7 @@
                                 {% for z in d %}
                                     
                                         <td>
-                                            <form  action="/result" method="post">
+                                            <form  action="/result/{{int_params}}" method="post">
                                             
                                             {% if z == d0 %}
                                                 {% for u in x5 %}
@@ -183,7 +235,7 @@
                                             </form>
                                             {% for y in a %}
                                                 {% if z == y %}
-                                                    <p><input class="box" type="submit" name="a" value={{z}}></p>
+                                                    <p><input class="box2" type="submit" name="a" value={{z}}></p>
                                                 {% endif %}
                                             {% endfor %}
                                             
@@ -230,7 +282,7 @@
                                 {{j.weight}}<span>自由記入</span>
                             </div>
                             <p></p>
-                            </p><a href="/del_todo/{{ j.id }}">削除</a>
+                            </p><a href="/del_todo/{{int_params}}/{{ j.id }}">削除</a>
                         {% else %}
                             <div class="tooltip-001">
                                 {{j.starttime}}, <span>開始時間</span>
@@ -245,7 +297,7 @@
                                 {{j.nunber}}<span>自由記入</span>
                             </div>
                             <p></p>
-                            <a href="/del_todo/{{ j.id }}">削除</a>
+                            <a href="/del_todo/{{int_params}}/{{ j.id }}">削除</a>
                         {% endif %}
                         <hr>
                     </div>
@@ -260,7 +312,7 @@
             <div class="row">
 		        <div class="col-sm-3"></div>
 		            <div class="col-sm-6">
-                        <form  action="/result1" method="post">
+                        <form  action="/result1/{{int_params}}" method="post">
                             <p><input type="hidden" name="c" value={{i}} ></p>
                             <p><input type="hidden" name="kinds" value={{kinds}} ></p>
                             <p><input type="hidden" name="item" value={{item}} ></p>

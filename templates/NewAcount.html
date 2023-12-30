@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<link rel="stylesheet" href="./static/css/login.css" />
+<div class="form">
+    <form action="/CreateAcount" name="login_form"  method="post">
+      <div class="login_form_top">
+        <h1>Create acount</h1>
+        <p>UserID、Passwordをご入力の上、「Create acount」ボタンをクリックしてください。</p>
+      </div>
+      <div class="login_form_btm">
+        <input type="id" name="user_id" placeholder="UserID" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" class="NewAcount" value="Create acount">
+      </div>
+    </form>
+{% endblock %}

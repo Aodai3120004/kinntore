@@ -64,13 +64,81 @@
     -10px -10px 15px #fff;
 }
 
+
+
+.box3 {
+  border:none;
+  background-color: rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 80%;
+  color: #333;
+  font-size: 70%;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1), 
+    -10px -10px 15px #fff;
+}
+
+
+
+.box4 {
+  border:none;
+  background-color: rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 80%;
+  color: #333;
+  font-size: 70%;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1), 
+    -10px -10px 15px #fff;
+}
+
+
+
 .box:hover {
   color: #333;
   box-shadow: inset 10px 10px 15px rgba(0, 0, 0, 0.1),
     inset -10px -10px 15px #fff;
 }
 
-#calendar table tr:nth-child(2) .box{background: #c0c0c0;}
+
+.box0:hover {
+  color: #333;
+  box-shadow: inset 10px 10px 15px rgba(0, 0, 0, 0.1),
+    inset -10px -10px 15px #fff;
+}
+
+
+.box1:hover {
+  color: #333;
+  box-shadow: inset 10px 10px 15px rgba(0, 0, 0, 0.1),
+    inset -10px -10px 15px #fff;
+}
+
+
+.box3:hover {
+  color: #333;
+  box-shadow: inset 10px 10px 15px rgba(0, 0, 0, 0.1),
+    inset -10px -10px 15px #fff;
+}
+
+
+.box4:hover {
+  color: #333;
+  box-shadow: inset 10px 10px 15px rgba(0, 0, 0, 0.1),
+    inset -10px -10px 15px #fff;
+}
+
+
+
+#calendar table tr:nth-child(2) .box2{background: #c0c0c0;}
 
 #calendar table td:nth-of-type(6) .box{color: #2196f3;}
 
@@ -202,3 +270,4 @@ input[type="number"] {
     visibility: visible;
     opacity: 1;
 }
+

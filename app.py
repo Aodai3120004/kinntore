@@ -21,16 +21,120 @@ class ToDo(db.Model):
 	nunber = db.Column(db.String(128), nullable=False)
 	time = db.Column(db.String(128), nullable=False)
 	weight = db.Column(db.String(128), nullable=False)
+	
 
 
 @app.route("/")
-def hello_world():
+def LoginScreen():
+    
+    return render_template("login.html")
+
+
+
+
+
+@app.route("/login", methods=["POST"])
+def login():
+    user_id = request.form["user_id"]
+    password = request.form["password"]
+    
+    f =  open('UserName.txt','r')
+    user_data = f.readlines()
+    f.close
+    
+    AcountNumber=0
+    for i in user_data:
+        AcountNumber+=1
+        if i[:-1] == str(user_id) + str(password):
+            return redirect(url_for("hello_world", int_params=str(AcountNumber)))
+    
+    
+    return render_template("login.html")
+    
+
+
+
+@app.route("/NewAcount")
+def new():
+    return render_template("NewAcount.html")
+
+@app.route("/CreateAcount", methods=["POST"])
+def Create():
+    user_id = request.form["user_id"]
+    password = request.form["password"]
+    
+    
+    
+    f =  open('UserName.txt','r')
+    user_data = f.readlines()
+    f.close
+
+    
+    for i in user_data:
+        if i[:2] == str(user_id) + str(password):
+            return redirect(url_for("LoginScreen0"))
+            
+    
+    day =  open('day.txt','a')
+    day.write(str(1) + "\n")
+    day.close
+    
+    day1 =  open('day1.txt','a')
+    day1.write("１月" + "\n")
+    day1.close
+    
+    dbid =  open('dbid.txt','a')
+    dbid.write(str(11) + "\n")
+    dbid.close
+    
+    tra =  open('tra.txt','a')
+    tra.write(str("トレーニング") + "\n")
+    tra.close
+            
+    f =  open('UserName.txt','a')
+    f.write(str(user_id) + str(password) + "\n")
+    f.close
+    
+    time30 =  open('test.txt','a')
+    time30.write("2023/12/5 15:36:0" + "\n")
+    time30.close
+    
+    time3 =  open('test1.txt','a')
+    time3.write("2023/12/5 15:36:0" + "\n")
+    time3.close
+    
+    return redirect(url_for("LoginScreen"))
+
+
+@app.route("/NG")
+def LoginScreen0():
+    
+    comment1="そのUserIDとPasswordの組み合わせだと"
+    comment2="登録できません"
+    
+    return render_template("login.html", comment1=comment1, comment2=comment2)
+
+
+
+
+
+
+@app.route("/00/<string:int_params>")
+def hello_world(int_params):
+    data_number = int(int_params)
+    
     #f = open('cal.txt','w')
     #f.write(calendar.calendar(2023,c=12,m=1))
     #f.close
+    
+    #f = open('UserName.txt','w')
+    #f.write(calendar.calendar(2023,c=12,m=1))
+    #f.close
+    
     c =  open('cal.txt','r')
     c1 = c.readlines()
     c.close
+    
 
     x = []
     y = [41,42,43,44,45,46,47,48,49,50,51,52,53]
@@ -81,39 +185,64 @@ def hello_world():
                 d = -1
                 break
     
+    d13=[]
     d =  open('day.txt','r')
-    d13 = d.readlines()
+    day = d.readlines()
     d.close
+    for i in day:
+        istrip=i.strip("\n")
+        d13.append(istrip)
     
+    
+    
+    d14=[]
     d =  open('day1.txt','r')
-    d14 = d.readlines()
+    day1 = d.readlines()
     d.close
+    for i in day1:
+        istrip=i.strip("\n")
+        d14.append(istrip)
     
+    
+    
+    d15=[]
     d =  open('dbid.txt','r')
-    d15 = d.readlines()
+    dbid = d.readlines()
     d.close
+    for i in dbid:
+        istrip=i.strip("\n")
+        d15.append(istrip)
     
     
+    
+    kinds=[]
     item=["トレーニング", "食事"]
     d =  open('tra.txt','r')
-    kinds = d.readlines()
+    tra = d.readlines()
     d.close
+    for i in tra:
+        istrip=i.strip("\n")
+        kinds.append(istrip)
+    
     
     currenttime30 =  open('test.txt','r')
     timed30 = currenttime30.readlines()
     currenttime30.close()
-    ltime30 = timed30[0]
+    time30_d = timed30[data_number-1]
+    ltime30 = time30_d.strip("\n")
+    
+    
     
     currenttime3 =  open('test1.txt','r')
     timed3 = currenttime3.readlines()
     currenttime3.close()
-    ltime3 = timed3[0] 
-    
+    time3_d = timed3[data_number-1] 
+    ltime3 = time3_d.strip("\n")
     
     
     #x2 = [d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12]
-    d0=d13[0]
-    d01=d14[0]
+    d0=d13[data_number-1]
+    d01=d14[data_number-1]
     d02=[]
     
     x0 = ["１月","２月","３月","４月","５月","６月","７月","８月","９月","１０月","１１月","１２月"]
@@ -146,41 +275,62 @@ def hello_world():
     data = ToDo.query.all()
     for d in data:
         x.append(d.id)
+        
+        
+        
+        
 
     y=[]
+    end_id_number = str(data_number)
     for i in x:
-        y.append(str(i))
+        str_x = str(i)
+        str_i = str_x[:-2]
+        if str_i.endswith(end_id_number, len(end_id_number)):
+            y.append(str(i))
+        
+
+    
+    
+    if len(str(data_number)) == 1:
+        acount_dbid = str(0) + str(0) + str(0) + str(data_number)
+    if len(str(data_number)) == 2:
+        acount_dbid = str(0) + str(0) + str(data_number)
+    if len(str(data_number)) == 3:
+        acount_dbid = str(0) + str(data_number)
+    
+    
+    
     
         
-    if kinds[0] == "トレーニング":
-        z=d15[0] + str(1)
-        x0=[s for s in y if str(z) in s]
+    if kinds[data_number-1] == "トレーニング":
+        z=d15[data_number-1] + str(1)
+        x0=[s for s in y if len(s[:-6])==len(str(z)) if str(z) in s]
         if len(x0) == 0:
-            z=d15[0] + str(1) + str(0) + str(1)
+            z=d15[data_number-1] + str(1) + acount_dbid + str(0) + str(1)
             x0.append(int(z))
         else:
             if len(str(len(x0) + 1)) == 1:
-                z=d15[0] + str(1) + str(0) + str(len(x0) + 1)
+                z=d15[data_number-1] + str(1) + acount_dbid + str(0) + str(len(x0) + 1)
                 x0.append(int(z))
     
             else:
-                z=d15[0] + str(1) + str(len(x0) + 1)
+                z=d15[data_number-1] + str(1) + acount_dbid + str(len(x0) + 1)
                 x0.append(int(z))
                 
             
-    if kinds[0] == "食事":
-        z=d15[0] + str(2)
-        x0=[s for s in y if str(z) in s]
+    if kinds[data_number-1] == "食事":
+        z=d15[data_number-1] + str(2)
+        x0=[s for s in y if len(s[:-6])==len(str(z)) if str(z) in s]
         if len(x0) == 0:
-            z=d15[0] + str(2) + str(0) + str(1)
+            z=d15[data_number-1] + str(2) + acount_dbid + str(0) + str(1)
             x0.append(int(z))
         else:
             if len(str(len(x0) + 1)) == 1:
-                z=d15[0] + str(2) + str(0) + str(len(x0) + 1)
+                z=d15[data_number-1] + str(2) + acount_dbid + str(0) + str(len(x0) + 1)
                 x0.append(int(z))
     
             else:
-                z=d15[0] + str(2) + str(len(x0) + 1)
+                z=d15[data_number-1] + str(2) + acount_dbid + str(len(x0) + 1)
                 x0.append(int(z))
     
     z0=[int(z)]
@@ -206,7 +356,7 @@ def hello_world():
     reco=[]
     for i in y:
         a=str(i)
-        reco.append(a[:-3])
+        reco.append(a[:-7])
         
     
     recoday=[]
@@ -257,71 +407,112 @@ def hello_world():
     
     eat="食事"
     
-    kinds0 = kinds[0]
+    kinds0 = kinds[data_number-1]
     
-    if eat == kinds[0]:
+    if eat == kinds[data_number-1]:
         ltime = ltime3
     else:
         ltime = ltime30
     
     
     
-    
+    #aaaaa=1271000201
     x4 = ["１月","２月","３月","４月","５月","６月","７月","８月","９月","１０月","１１月","１２月"]
     
-    return render_template("cal.html",a=a, x3=x3, x4=x4, x5=x5,d0=d0, d01=d01, d15=d15, item=item, kinds=kinds, kinds0=kinds0, x0=x0, tore=tore, eat=eat, x1=x1, x2=x2, y=y, z0=z0, data=data, recoday=recoday, setday=setday, setday_list=setday_list, setday_str=setday_str, ltime=ltime)
-
+    return render_template("cal.html", a=a, x3=x3, x4=x4, x5=x5,d0=d0, d01=d01, d15=d15[data_number-1], 
+                                      item=item, kinds=[kinds[data_number-1]], kinds0=kinds0, x0=x0, 
+                                      tore=tore, eat=eat, x1=x1, x2=x2, y=y, z0=z0, data=data, reco=reco, recoday=recoday, 
+                                      setday=setday, setday_list=setday_list, setday_str=setday_str, ltime=ltime,
+                                      int_params=int_params)
+                                      
     
-@app.route("/result0", methods=["POST"])
-def hello0():
-    name = request.form["a"]
-    f = open('tra.txt','w')
-    f.write(name)
-    f.close
+@app.route("/result0/<string:int_params>", methods=["POST"])
+def hello0(int_params):
+    data_number=int(int_params)
     
-    return redirect(url_for('hello_world'))
+    
+    tra_d = request.form["a"]
+    tra = open('tra.txt','r')
+    tra_r = tra.readlines()
+    tra.close
+    tra_r[data_number-1]=str(tra_d) + "\n"
+    
+    
+    
+    tra = open('tra.txt','w')
+    tra.writelines(tra_r)
+    tra.close
+    
+    return redirect(url_for('hello_world', int_params=int_params))
 
 
-@app.route("/result", methods=["POST"])
-def hello():
-    name = request.form["a"]
-    f = open('day.txt','w')
-    f.write(name)
-    f.close
+@app.route("/result/<string:int_params>", methods=["POST"])
+def hello(int_params):
+    data_number=int(int_params)
     
-    name1 = request.form["b"]
-    f = open('day1.txt','w')
-    f.write(name1)
-    f.close
+    #day_d = name
+    day_d = request.form["a"]
+    day = open('day.txt','r')
+    day_r = day.readlines()
+    day.close
+    day_r[data_number-1]=str(day_d) + "\n"
+    
+    day = open('day.txt','w')
+    day.writelines(day_r)
+    day.close
+    
+    
+    
+    #month_d = name1
+    month_d = request.form["b"]
+    month = open('day1.txt','r')
+    month_r = month.readlines()
+    month.close
+    month_r[data_number-1]=str(month_d) + "\n"
+    
+    month = open('day1.txt','w')
+    month.writelines(month_r)
+    month.close
     
     x1 = ["１月","２月","３月","４月","５月","６月","７月","８月","９月","１０月","１１月","１２月"]
     z=0
     a=0
     for i in x1:
         z+=1
-        if i == name1:
-            f = open("dbid.txt", "w")
-            f.write(str(z))
-            f.write(name)
-            f.close()
+        if i == month_d:
+            dbid = open("dbid.txt", "r")
+            dbid_r = dbid.readlines()
+            dbid.close()
+            dbid_r[data_number-1]=str(z) + str(day_d) + "\n"
+            
+            dbid = open("dbid.txt", "w")
+            dbid.writelines(dbid_r)
+            dbid.close()
     
     
     #x3=[d1]
-    return redirect(url_for('hello_world'))
+    return redirect(url_for('hello_world', int_params=int_params))
 
-@app.route("/result1", methods=["POST"])
-def hell():
+@app.route("/result1/<string:int_params>", methods=["POST"])
+def hell(int_params):
+    data_number=int(int_params)
+    
+    
+    
     name = request.form["c"]
-    d =  open('tra.txt','r')
-    kinds = d.readlines()
-    d.close
-    tore = ["トレーニング"]
-    return render_template("hozon.html", name=name, kinds=kinds, tore=tore)
+    tra =  open('tra.txt','r')
+    tra_r = tra.readlines()
+    tra.close
+    
+    kinds = str(tra_r[data_number-1])
+    tore = "トレーニング\n"
+    return render_template("hozon.html", name=name, kinds=kinds, tore=tore, int_params=int_params)
 
 
 a=0
-@app.route("/result2", methods=["POST"])
-def hel():
+@app.route("/result2/<string:int_params>", methods=["POST"])
+def hel(int_params):
+    data_number=str(int_params)
     name = request.form["a"]
     name1 = request.form["b"]
     name2 = request.form["c"]
@@ -329,6 +520,16 @@ def hel():
     name4 = request.form["e"]
     name5 = request.form["f"]
     name0 = request.form["g"]
+    
+    if len(data_number) == 1:
+        acount_dbid = str(0) + str(0) + str(0) + data_number
+    if len(data_number) == 2:
+        acount_dbid = str(0) + str(0) + data_number
+    if len(data_number) == 3:
+        acount_dbid = str(0) + data_number
+    
+    str_dbid = str(name0) + str(acount_dbid)
+    dbid = int(str_dbid)
 
     
     new_todo = ToDo(id = name0, starttime=name, site=name1, content=name2, nunber=name3, time=name4, weight=name5)
@@ -336,87 +537,98 @@ def hel():
     db.session.commit()
     
     
-    return redirect(url_for('hello_world'))
+    return redirect(url_for('hello_world', int_params=int_params))
     
 
-@app.route('/del_todo/<int:id>')
-def del_todo(id):
+@app.route('/del_todo/<string:int_params>/<int:id>')
+def del_todo(int_params,id):
 	del_data = ToDo.query.filter_by(id=id).first()
 	db.session.delete(del_data)
 	db.session.commit()
-	return redirect(url_for('hello_world'))
+	return redirect(url_for('hello_world', int_params=int_params))
 	
 
 
-@app.route('/date', methods=['POST'])
-def date():
-	
-	name = request.form["a"]
-	stime = name.split(":")
-	
-	dt_now = datetime.datetime.now()#datetime.datetime.now(pytz.timezone('Asia/Tokyo'))#datetime.datetime.now()
-	
-	year = dt_now.year
-	month = dt_now.month
-	day = dt_now.day
-	
-	dt_now0 = datetime.datetime(year, month, day, int(stime[0]), int(stime[1]))
-	dt_now1 = dt_now0 + datetime.timedelta(minutes=+30)
-	
-	year = dt_now1.year
-	month = dt_now1.month
-	day = dt_now1.day
-	hour = dt_now1.hour
-	minute = dt_now1.minute
-	second = dt_now1.second
-	
-	#dt_now0 = datetime.datetime(year, month, day, hour, stime[0], stime[1])
+@app.route('/date/<string:int_params>', methods=['POST'])
+def date(int_params):
+    data_number=int(int_params)
+    
+    name = request.form["a"]
+    stime = name.split(":")
+    
+    dt_now = datetime.datetime.now()#datetime.datetime.now(pytz.timezone('Asia/Tokyo'))#datetime.datetime.now()
+    
+    year = dt_now.year
+    month = dt_now.month
+    day = dt_now.day
+    
+    dt_now0 = datetime.datetime(year, month, day, int(stime[0]), int(stime[1]))
+    dt_now1 = dt_now0 + datetime.timedelta(minutes=+30)
+    
+    year = dt_now1.year
+    month = dt_now1.month
+    day = dt_now1.day
+    hour = dt_now1.hour
+    minute = dt_now1.minute
+    second = dt_now1.second#dt_now0 = datetime.datetime(year, month, day, hour, stime[0], stime[1])
+    
+    time = str(year) + "/" + str(month) + "/" +str(day+1) + " " + str(hour) + ":" + str(minute) + ":" + str(second)
+    name = request.form["a"]
+    
+    
+    time30 = open('test.txt','r')
+    time30_r = time30.readlines()
+    time30.close
+    time30_r[data_number-1]=str(time) + "\n"
+    
+    time30 =  open('test.txt','w')
+    time30.writelines(time30_r)
+    time30.close
+    
+    return redirect(url_for('hello_world', int_params=int_params))
 
-	time = str(year) + "/" + str(month) + "/" +str(day) + " " + str(hour) + ":" + str(minute) + ":" + str(second)
-	
-	name = request.form["a"]
-	
-	
-	f =  open('test.txt','w')
-	f.write(time)
-	f.close
-	return redirect(url_for('hello_world'))
 
 
-
-@app.route('/date0', methods=['POST'])
-def date0():
-	
-	name = request.form["a"]
-	stime = name.split(":")
-	
-	dt_now = datetime.datetime.now()#datetime.datetime.now(pytz.timezone('Asia/Tokyo'))#datetime.datetime.now()
-	
-	year = dt_now.year
-	month = dt_now.month
-	day = dt_now.day
-	
-	dt_now0 = datetime.datetime(year, month, day, int(stime[0]), int(stime[1]))
-	dt_now1 = dt_now0 + datetime.timedelta(hours=+3)
-	
-	year = dt_now1.year
-	month = dt_now1.month
-	day = dt_now1.day
-	hour = dt_now1.hour
-	minute = dt_now1.minute
-	second = dt_now1.second
-	
-	#dt_now0 = datetime.datetime(year, month, day, hour, stime[0], stime[1])
-
-	time = str(year) + "/" + str(month) + "/" +str(day) + " " + str(hour) + ":" + str(minute) + ":" + str(second)
-	
-	name = request.form["a"]
-	
-	
-	f =  open('test1.txt','w')
-	f.write(time)
-	f.close
-	return redirect(url_for('hello_world'))
+@app.route('/date0/<string:int_params>', methods=['POST'])
+def date0(int_params):
+    data_number=int(int_params)
+    
+    name = request.form["a"]
+    stime = name.split(":")
+    
+    dt_now = datetime.datetime.now()#datetime.datetime.now(pytz.timezone('Asia/Tokyo'))#datetime.datetime.now()
+    
+    year = dt_now.year
+    month = dt_now.month
+    day = dt_now.day
+    
+    dt_now0 = datetime.datetime(year, month, day, int(stime[0]), int(stime[1]))
+    dt_now1 = dt_now0 + datetime.timedelta(hours=+3)
+    
+    year = dt_now1.year
+    month = dt_now1.month
+    day = dt_now1.day
+    hour = dt_now1.hour
+    minute = dt_now1.minute
+    second = dt_now1.second#dt_now0 = datetime.datetime(year, month, day, hour, stime[0], stime[1])
+    
+    time = str(year) + "/" + str(month) + "/" +str(day+1) + " " + str(hour) + ":" + str(minute) + ":" + str(second)
+    
+    name = request.form["a"]
+    
+    
+    
+    time3 = open('test1.txt','r')
+    time3_r = time3.readlines()
+    time3.close
+    time3_r[data_number-1]=str(time) + "\n"
+    
+    
+    time3 =  open('test1.txt','w')
+    time3.writelines(time3_r)
+    time3.close
+    
+    return redirect(url_for('hello_world', int_params=int_params))
 
 
         

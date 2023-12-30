@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<link rel="stylesheet" href="../static/css/login.css" />
+<div class="form">
+    {{user_data}}
+    <form action="/login" name="login_form" method="post">
+      <div class="login_form_top">
+        <h1>LOGIN</h1>
+        <p>UserID、Passwordをご入力の上、「LOGIN」ボタンをクリックしてください。</p>
+      </div>
+      <div class="login_form_btm">
+        <input type="id" name="user_id" placeholder="UserID" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" class="login" value="LOGIN">
+      </div>
+    </form>
+    
+    <form action="/NewAcount" name="login_form">
+        <div class="NewAcount_form_btm">
+            <input type="submit" class="NewAcount" value="new acount">
+        </div>
+    </form>
+    <p><font color="red">{{comment1}}</font></p>
+    <p><font color="red">{{comment2}}</font></p>
+</div>
+
+    
+
+
+{% endblock %}

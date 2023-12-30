@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
+
+
+
 <div class="container-fulid">
 	<div class="row">
 	    <div class="col-sm-4"></div>
 	        <div class="col-sm-4">
-                <form  action="/result2" method="post">
+                <form  action="/result2/{{int_params}}" method="post">
                 {% if kinds == tore %}
                     <label for="time">開始時間：</label>
                     <input type="time" name="a" required>
@@ -69,5 +72,6 @@
         <div class="col-sm-4"></div>
     </div>
 </div>
+<p>{{name}}</p>
 
 {% endblock %}
